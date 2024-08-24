@@ -18,7 +18,6 @@ import { Settings, State } from "./settings";
 import { createSplashWindow } from "./splash";
 import { addOneTaskSplash, addSplashLog, initSplashLog } from "./utils/detailedLog";
 import { isDeckGameMode } from "./utils/steamOS";
-import { startVenbind } from "./venbind";
 
 if (IS_DEV) {
     require("source-map-support").install();
@@ -69,18 +68,8 @@ function init() {
     // In the Flatpak on SteamOS the theme is detected as light, but SteamOS only has a dark mode, so we just override it
     if (isDeckGameMode) nativeTheme.themeSource = "dark";
 
-    app.on("second-instance", (_event, cmdLine, _cwd, data: any) => {
-        const keybindIndex = cmdLine.indexOf("--keybind");
-
-        if (keybindIndex !== -1) {
-            if (cmdLine[keybindIndex + 2] === "keyup" || cmdLine[keybindIndex + 2] === "keydown") {
-                mainWin.webContents.executeJavaScript(
-                    `Vesktop.keybindCallbacks[${cmdLine[keybindIndex + 1]}](${cmdLine[keybindIndex + 2] === "keydown" ? "true" : "false"})`
-                );
-            } else {
-                mainWin.webContents.executeJavaScript(`Vesktop.keybindCallbacks[${cmdLine[keybindIndex + 1]}](false)`);
-            }
-        } else if (data.IS_DEV) app.quit();
+    app.on("second-instance", (_event, _cmdLine, _cwd, data: any) => {
+        if (data.IS_DEV) app.quit();
         else if (mainWin) {
             if (mainWin.isMinimized()) mainWin.restore();
             if (!mainWin.isVisible()) mainWin.show();
@@ -97,7 +86,6 @@ function init() {
         addSplashLog("Created splash window");
 
         addSplashLog("Registering handlers");
-        startVenbind();
         registerScreenShareHandler();
         registerMediaPermissionsHandler();
         // register file handler so we can load the custom splash animation from the user's filesystem
@@ -125,12 +113,7 @@ if (!app.requestSingleInstanceLock({ IS_DEV })) {
         app.quit();
     }
 } else {
-    if (process.argv.includes("--keybind")) {
-        console.error("No instances running! cannot issue a keybind!");
-        app.quit();
-    } else {
-        init();
-    }
+    init();
 }
 
 async function bootstrap() {
