@@ -108,5 +108,10 @@ export const VesktopNative = {
             );
         },
         returnIconWithBadge: (dataURL: string) => invoke<void>(IpcEvents.GET_ICON_WITH_BADGE, dataURL)
+    },
+    keybind: {
+        register: (id: number, shortcut: string, options: any) =>
+            invoke<void>(IpcEvents.KEYBIND_REGISTER, id, shortcut),
+        unregister: (id: number) => invoke<void>(IpcEvents.KEYBIND_UNREGISTER, id)
     }
 };
