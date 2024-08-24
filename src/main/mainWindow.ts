@@ -33,11 +33,13 @@ import {
     DATA_DIR,
     DEFAULT_HEIGHT,
     DEFAULT_WIDTH,
+    isWayland,
     MessageBoxChoice,
     MIN_HEIGHT,
     MIN_WIDTH,
     VENCORD_DIR
 } from "./constants";
+import { initKeybinds } from "./keybinds";
 import { Settings, State, VencordSettings } from "./settings";
 import { setTrayIcon } from "./tray";
 import { addOneTaskSplash, addSplashLog, getSplash } from "./utils/detailedLog";
@@ -538,6 +540,7 @@ export async function createWindows() {
     });
 
     initArRPC();
+    if (isWayland) initKeybinds();
 }
 
 export function getAccentColor(): Promise<string> {

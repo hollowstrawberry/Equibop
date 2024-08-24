@@ -108,5 +108,13 @@ export const VesktopNative = {
             );
         },
         returnIconWithBadge: (dataURL: string) => invoke<void>(IpcEvents.GET_ICON_WITH_BADGE, dataURL)
+    },
+    voice: {
+        onToggleSelfMute: (listener: (...args: any[]) => void) => {
+            ipcRenderer.on(IpcEvents.TOGGLE_SELF_MUTE, listener);
+        },
+        onToggleSelfDeaf: (listener: (...args: any[]) => void) => {
+            ipcRenderer.on(IpcEvents.TOGGLE_SELF_DEAF, listener);
+        }
     }
 };
