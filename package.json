@@ -1,6 +1,6 @@
 {
     "name": "equibop",
-    "version": "2.1.0",
+    "version": "2.0.9",
     "private": true,
     "description": "A fork of Vesktop pre-packaged with Equicord",
     "keywords": [],
@@ -29,7 +29,7 @@
         "electron-updater": "^6.2.1"
     },
     "optionalDependencies": {
-        "@vencord/venmic": "^6.1.0",
+        "@equicord/equimic": "^6.2.0",
         "@homebridge/dbus-native": "0.6.0"
     },
     "devDependencies": {
@@ -181,6 +181,11 @@
         "publish": {
             "provider": "github",
             "releaseType": "release"
+        },
+        "rpm": {
+            "fpm": [
+                "--rpm-rpmbuild-define=_build_id_links none"
+            ]
         }
     },
     "pnpm": {

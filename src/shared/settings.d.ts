@@ -19,6 +19,7 @@ export interface Settings {
     traySpeakingOverride?: boolean;
     trayDeafenedOverride?: boolean;
     minimizeToTray?: boolean;
+    middleClickAutoscroll?: boolean;
     openLinksWithElectron?: boolean;
     staticTitle?: boolean;
     enableMenu?: boolean;
@@ -34,7 +35,7 @@ export interface Settings {
     splashColor?: string;
     splashAnimationPath?: string;
     splashBackground?: string;
-    splashDetailed?: boolean;
+    splashProgress?: boolean;
 
     spellCheckLanguages?: string[];
 
